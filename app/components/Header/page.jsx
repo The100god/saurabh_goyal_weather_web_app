@@ -225,7 +225,7 @@ const Navbar = (props) => {
           </section>
         </div>
       </nav>
-      <div className="flex md:flex-none justify-end max-w-7xl px-3 mt-2">
+      <div className="flex md:hidden justify-end max-w-7xl px-3 mt-2">
 
       <InstallButton />
       </div>
