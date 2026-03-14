@@ -24,14 +24,14 @@ const Navbar = (props) => {
   const [_, setLoadingCity] = useAtom(loadingCityAtom);
   const [toggleWishlist, setToggleWishlist] = useState(false);
   const [toggleHistorylist, setToggleHistoryList] = useState(false);
-  const [historyList, setHistoryList] = useAtom(historyDataList)
+  const [historyList, setHistoryList] = useAtom(historyDataList);
 
   const handleInputOnChange = async (value) => {
     setCity(value);
     if (value.length >= 3) {
       try {
         const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/find?q=${value}&appid=${API_KEY}`
+          `https://api.openweathermap.org/data/2.5/find?q=${value}&appid=${API_KEY}`,
         );
         const suggestions = response.data.list.map((item) => item.name);
         setSuggestions(suggestions);
@@ -75,7 +75,7 @@ const Navbar = (props) => {
         try {
           setLoadingCity(true);
           const response = await axios.get(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`
+            `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`,
           );
           setTimeout(() => {
             setLoadingCity(false);
@@ -87,22 +87,20 @@ const Navbar = (props) => {
       });
     }
   };
-  
 
-  const handleHistoryRemove =(index)=>{
+  const handleHistoryRemove = (index) => {
     // console.log("index", index)
-    const newArray = []
+    const newArray = [];
     for (let i = 0; i < historyList.length; i++) {
-      if (i !== index){
-        newArray.push(historyList[i])
+      if (i !== index) {
+        newArray.push(historyList[i]);
       }
-      
     }
-    
-    setHistoryList(newArray)
 
-    localStorage.setItem("hisList", newArray)
-  }
+    setHistoryList(newArray);
+
+    localStorage.setItem("hisList", newArray);
+  };
 
   const capitalize = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -180,45 +178,55 @@ const Navbar = (props) => {
             </div>
             <div className="relative">
               <span className="text-[20px] mr-[8px] ml-3 cursor-pointer">
-                <FaHistory title="History" fill="#18afba" onClick={() => setToggleHistoryList(!toggleHistorylist)}/>
+                <FaHistory
+                  title="History"
+                  fill="#18afba"
+                  onClick={() => setToggleHistoryList(!toggleHistorylist)}
+                />
               </span>
-              {
-                toggleHistorylist && <div className=" absolute bg-white top-[70px] left-[-153px] w-[180px] items-center justify-center max-h-[200px] overflow-y-auto rounded-md  shadow-lg">
-                {historyList.length > 0 && (
-                  <ul className=" justify-center items-center w-full  py-[10px]">
-                    {historyList.map((h, index) => (
-                      <li key={index} className=" flex flex-row justify-between items-center px-[15px] w-full text-md hover:bg-[#18afba] mb-1 hover:text-white cursor-pointer">
-                        <span
-                          className="w-full"
-                          onClick={() => {
-                            setPlace(h)
-                            setToggleHistoryList(!toggleHistorylist);
-                          }}
+              {toggleHistorylist && (
+                <div className=" absolute bg-white top-[70px] left-[-153px] w-[180px] items-center justify-center max-h-[200px] overflow-y-auto rounded-md  shadow-lg">
+                  {historyList.length > 0 && (
+                    <ul className=" justify-center items-center w-full  py-[10px]">
+                      {historyList.map((h, index) => (
+                        <li
+                          key={index}
+                          className=" flex flex-row justify-between items-center px-[15px] w-full text-md hover:bg-[#18afba] mb-1 hover:text-white cursor-pointer"
                         >
-                          {capitalize(h)}
-                        </span>
-                        <span
-                          className="text-white "
-                          onClick={()=>handleHistoryRemove(index)}
-                        >
-                          <RxCrossCircled />
-                        </span>
-                      </li>
-                    ))}
-                  </ul>)}
+                          <span
+                            className="w-full"
+                            onClick={() => {
+                              setPlace(h);
+                              setToggleHistoryList(!toggleHistorylist);
+                            }}
+                          >
+                            {capitalize(h)}
+                          </span>
+                          <span
+                            className="text-white "
+                            onClick={() => handleHistoryRemove(index)}
+                          >
+                            <RxCrossCircled />
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
-              }
+              )}
             </div>
             <span
               title="My Current Location"
               className="px-2 py-1 text-sm md:text-md rounded-[5px] font-[600] text-[white] bg-[#18afba] hover:opacity-80 cursor-pointer"
               onClick={handleCurrentLocation}
             >
-              My Location
+              Where am I?
             </span>
           </section>
         </div>
       </nav>
+      <InstallButton />
+
       <section className="flex max-w-7xl px-3 md:hidden">
         <div className="relative">
           <SearchBox
@@ -230,7 +238,6 @@ const Navbar = (props) => {
             {...{ showSuggestions, suggestions, handleSuggestionClick, error }}
           />
         </div>
-        <InstallButton />
       </section>
     </>
   );
