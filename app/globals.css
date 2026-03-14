@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+ 
+  
+  /* Track */
+  ::-webkit-scrollbar {
+    width: 8px; /* Set the width of the scrollbar */
+    height: 8px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgba(155, 155, 155, 0.5); /* Set the color of the scrollbar thumb */
+    border-radius: 4px; /* Round the corners of the scrollbar thumb */
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(29, 26, 26, 0.8); /* Change the color on hover */
+  }
