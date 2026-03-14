@@ -217,7 +217,7 @@ const Navbar = (props) => {
             </div>
             <span
               title="My Current Location"
-              className="px-2 py-1 text-sm md:text-md rounded-[5px] font-[600] text-[white] bg-[#18afba] hover:opacity-80 cursor-pointer"
+              className="px-2 py-1 select-none text-sm md:text-md rounded-[5px] font-[600] text-[white] bg-[#18afba] hover:opacity-80 cursor-pointer"
               onClick={handleCurrentLocation}
             >
               Where am I?
